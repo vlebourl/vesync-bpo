@@ -121,7 +121,7 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
             switches.extend(new_switches)
             async_dispatcher_send(hass, VS_DISCOVERY.format(VS_SWITCHES), new_switches)
             return
-        if new_switches and not switches:
+        if new_switches:
             switches.extend(new_switches)
             hass.async_create_task(forward_setup(config_entry, Platform.SWITCH))
 
@@ -131,7 +131,7 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
             fans.extend(new_fans)
             async_dispatcher_send(hass, VS_DISCOVERY.format(VS_FANS), new_fans)
             return
-        if new_fans and not fans:
+        if new_fans:
             fans.extend(new_fans)
             hass.async_create_task(forward_setup(config_entry, Platform.FAN))
 
@@ -141,7 +141,7 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
             lights.extend(new_lights)
             async_dispatcher_send(hass, VS_DISCOVERY.format(VS_LIGHTS), new_lights)
             return
-        if new_lights and not lights:
+        if new_lights:
             lights.extend(new_lights)
             hass.async_create_task(forward_setup(config_entry, Platform.LIGHT))
 
@@ -153,7 +153,7 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
                 hass, VS_DISCOVERY.format(VS_HUMIDIFIERS), new_humidifiers
             )
             return
-        if new_humidifiers and not humidifiers:
+        if new_humidifiers:
             humidifiers.extend(new_humidifiers)
             hass.async_create_task(forward_setup(config_entry, Platform.HUMIDIFIER))
 
@@ -163,7 +163,7 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
             numbers.extend(new_numbers)
             async_dispatcher_send(hass, VS_DISCOVERY.format(VS_NUMBERS), new_numbers)
             return
-        if new_numbers and not numbers:
+        if new_numbers:
             numbers.extend(new_numbers)
             hass.async_create_task(forward_setup(config_entry, Platform.NUMBER))
 
@@ -173,7 +173,7 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
             sensors.extend(new_sensors)
             async_dispatcher_send(hass, VS_DISCOVERY.format(VS_SENSORS), new_sensors)
             return
-        if new_sensors and not sensors:
+        if new_sensors:
             sensors.extend(new_sensors)
             hass.async_create_task(forward_setup(config_entry, Platform.SENSOR))
 
@@ -185,7 +185,7 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
                 hass, VS_DISCOVERY.format(VS_BINARY_SENSORS), new_binary_sensors
             )
             return
-        if new_binary_sensors and not binary_sensors:
+        if new_binary_sensors:
             binary_sensors.extend(new_binary_sensors)
             hass.async_create_task(forward_setup(config_entry, Platform.BINARY_SENSOR))
 

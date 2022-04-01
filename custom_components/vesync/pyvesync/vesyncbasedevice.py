@@ -27,8 +27,8 @@ class VeSyncBaseDevice:
             self.mac_id: Optional[str] = details.get("macID", None)
             self.mode: Optional[str] = details.get("mode", None)
             self.speed: Union[str, int, None] = details.get("speed", None)
-            self.extension = details.get("extension", None)
-            self.current_firm_version = details.get("currentFirmVersion", None)
+            self.extension = details.get("extension")
+            self.current_firm_version = details.get("currentFirmVersion")
             self.sub_device_no = details.get("subDeviceNo", 0)
             self.config: dict = {}
             if isinstance(details.get("extension"), dict):
@@ -38,14 +38,14 @@ class VeSyncBaseDevice:
             if self.connection_status != "online":
                 self.device_status = "off"
             else:
-                self.device_status = details.get("deviceStatus", None)
+                self.device_status = details.get("deviceStatus")
 
         else:
             logger.error("No cid found for %s", self.__class__.__name__)
 
     def __eq__(self, other):
         """Use device CID and subdevice number to test equality."""
-        return bool(other.cid == self.cid and other.sub_device_no == self.sub_device_no)
+        return other.cid == self.cid and other.sub_device_no == self.sub_device_no
 
     def __hash__(self):
         """Use CID and sub-device number to make device hash."""
@@ -69,20 +69,17 @@ class VeSyncBaseDevice:
     @property
     def is_on(self) -> bool:
         """Return true if device is on."""
-        if self.device_status == "on":
-            return True
-        return False
+        return self.device_status == "on"
 
     @property
     def firmware_update(self) -> bool:
         """Return True if firmware update available."""
         cfv = self.config.get("current_firmware_version")
         lfv = self.config.get("latest_firmware_version")
-        if cfv is not None and lfv is not None:
-            if cfv != lfv:
-                return True
-        else:
+        if cfv is None or lfv is None:
             logger.debug("Call device.get_config() to get firmware versions")
+        elif cfv != lfv:
+            return True
         return False
 
     def display(self) -> None:

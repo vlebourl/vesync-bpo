@@ -37,7 +37,7 @@ class VeSyncSwitch(VeSyncBaseDevice):
 
     def is_dimmable(self) -> bool:
         """Return True if switch is dimmable."""
-        return bool("dimmable" in self.features)
+        return "dimmable" in self.features
 
     @abstractmethod
     def get_details(self) -> None:
